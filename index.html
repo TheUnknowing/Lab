@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liste de Projets</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center p-6">
+  <h1 class="text-3xl font-bold mb-6">🛠️ Liste de Projets</h1>
+
+  <div class="w-full max-w-md">
+    <div class="flex mb-4">
+      <input id="projectInput" type="text" placeholder="Nouveau projet..."
+             class="flex-1 p-2 rounded-l bg-gray-800 border border-gray-600 placeholder-gray-400" />
+      <button onclick="addProject()"
+              class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-r font-bold">Ajouter</button>
+    </div>
+
+    <ul id="projectList" class="space-y-2"></ul>
+  </div>
+
+  <script>
+    const projectInput = document.getElementById('projectInput');
+    const projectList = document.getElementById('projectList');
+
+    function addProject() {
+      const name = projectInput.value.trim();
+      if (name === '') return;
+
+      const li = document.createElement('li');
+      li.className = 'bg-gray-800 p-3 rounded flex justify-between items-center';
+
+      const span = document.createElement('span');
+      span.textContent = name;
+
+      const del = document.createElement('button');
+      del.innerHTML = '✖';
+      del.className = 'text-red-500 hover:text-red-700 font-bold';
+      del.onclick = () => li.remove();
+
+      li.appendChild(span);
+      li.appendChild(del);
+
+      projectList.appendChild(li);
+      projectInput.value = '';
+    }
+
+    // Ajouter possibilité de valider avec la touche Entrée
+    projectInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') addProject();
+    });
+  </script>
+</body>
+</html>
