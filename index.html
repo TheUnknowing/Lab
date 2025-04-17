@@ -23,7 +23,7 @@
     }
 
     main {
-      max-width: 700px;
+      max-width: 800px;
       margin: 2rem auto;
       padding: 0 1rem;
     }
@@ -38,18 +38,18 @@
     .item-list {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
     .item {
       background-color: #1e1e1e;
-      padding: 1.2rem 1.5rem;
+      padding: 1.2rem;
       border-left: 4px solid #00bcd4;
       border-radius: 10px;
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 1rem;
       transition: transform 0.2s ease, background-color 0.3s;
     }
 
@@ -58,9 +58,22 @@
       background-color: #242424;
     }
 
+    .item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 6px;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .item-details {
+      flex-grow: 1;
+    }
+
     .item-name {
       font-weight: bold;
       font-size: 1.1rem;
+      margin-bottom: 0.3rem;
     }
 
     .item-price {
@@ -86,23 +99,52 @@
   <main>
     <div class="item-list">
       <div class="item">
-        <div class="item-name">Ray-Ban Smart Glasses</div>
-        <div class="item-price">750 €</div>
+        <img src="https://cdn.pixabay.com/photo/2021/06/23/15/52/glasses-6358454_1280.jpg" alt="Ray-Ban Smart Glasses">
+        <div class="item-details">
+          <div class="item-name">Ray-Ban Smart Glasses</div>
+          <div class="item-price">750 €</div>
+        </div>
       </div>
+
       <div class="item">
-        <div class="item-name">Rubber Ducky</div>
-        <div class="item-price">450 €</div>
+        <img src="https://cdn.pixabay.com/photo/2017/06/22/17/33/rubber-duck-2438654_1280.jpg" alt="Rubber Ducky">
+        <div class="item-details">
+          <div class="item-name">Rubber Ducky</div>
+          <div class="item-price">450 €</div>
+        </div>
       </div>
+
       <div class="item">
-        <div class="item-name">Yubikey 5C NFC</div>
-        <div class="item-price">95 €</div>
+        <img src="https://www.yubico.com/wp-content/uploads/2021/05/yubikey-5c-nfc.png" alt="Yubikey 5C NFC">
+        <div class="item-details">
+          <div class="item-name">Yubikey 5C NFC</div>
+          <div class="item-price">95 €</div>
+        </div>
       </div>
+
       <div class="item">
-        <div class="item-name">Livre "The Art of Exploitation"</div>
-        <div class="item-price">40 €</div>
+        <img src="https://images-na.ssl-images-amazon.com/images/I/51l5XzL8%2BTL._SX379_BO1,204,203,200_.jpg" alt="Livre The Art of Exploitation">
+        <div class="item-details">
+          <div class="item-name">Livre "The Art of Exploitation"</div>
+          <div class="item-price">40 €</div>
+        </div>
       </div>
     </div>
-    <div class="total">Total : 1 335 €</div>
+    <div class="total" id="total">Total : 0 €</div>
   </main>
+
+  <script>
+    function calculateTotal() {
+      const prices = document.querySelectorAll('.item-price');
+      let total = 0;
+      prices.forEach(price => {
+        const value = parseFloat(price.textContent.replace(/[^\d,.-]/g, '').replace(',', '.'));
+        total += value;
+      });
+      document.getElementById('total').textContent = `Total : ${total.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}`;
+    }
+
+    calculateTotal();
+  </script>
 </body>
 </html>
