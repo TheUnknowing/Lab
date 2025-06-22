@@ -1,48 +1,50 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liste d'achats</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Liste d'Achats</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Bebas Neue', sans-serif;
-      background-color: #000;
-      color: #f4f4f4;
+    :root {
+      --jaune: #fdd835;
+      --noir: #121212;
+      --gris: #1e1e1e;
+      --blanc: #fefefe;
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
+      box-sizing: border-box;
     }
 
-    h1 {
-      font-size: 3rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin: 0;
-      animation: fadeIn 2s forwards;
-      color: #ffeb3b;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+    body {
+      background-color: var(--noir);
+      color: var(--jaune);
+      font-family: 'Inter', sans-serif;
+      padding: 0 1rem;
     }
 
     header {
-      background-color: #111;
-      padding: 2rem;
       text-align: center;
-      box-shadow: 0 2px 10px rgba(255, 235, 59, 0.1);
-      border-bottom: 1px solid #333;
+      padding: 2rem 0;
+      background-color: #181818;
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 3rem;
+      letter-spacing: 2px;
+      animation: fadeIn 2s ease-out forwards;
+      color: var(--jaune);
     }
 
     main {
       max-width: 900px;
       margin: 2rem auto;
-      padding: 0 1rem;
-      animation: fadeIn 1s ease-out 1s forwards;
-      opacity: 0;
+      animation: fadeIn 2s ease-out forwards;
     }
 
     .item-list {
@@ -52,57 +54,52 @@
     }
 
     .item {
-      background-color: #1a1a1a;
-      border-left: 4px solid #ffeb3b;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      background-color: var(--gris);
       display: flex;
-      gap: 1rem;
       align-items: center;
+      gap: 1.2rem;
+      padding: 1rem;
+      border-left: 5px solid var(--jaune);
+      border-radius: 10px;
       transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
 
     .item:hover {
       transform: translateY(-4px);
-      box-shadow: 0 6px 18px rgba(255, 235, 59, 0.3);
+      box-shadow: 0 4px 20px rgba(255, 235, 59, 0.2);
     }
 
     .item img {
       width: 80px;
       height: 80px;
-      border-radius: 10px;
       object-fit: cover;
-      box-shadow: 0 0 10px rgba(255, 235, 59, 0.2);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
     .item-details {
-      flex-grow: 1;
+      flex: 1;
     }
 
     .item-name a {
-      font-size: 1.2rem;
+      color: var(--jaune);
       text-decoration: none;
-      color: #ffeb3b;
-      transition: color 0.2s;
-    }
-
-    .item-name a:hover {
-      color: #fff176;
+      font-weight: 600;
+      font-size: 1.1rem;
     }
 
     .item-price {
-      margin-top: 0.3rem;
-      font-size: 1.1rem;
-      color: #fdd835;
+      margin-top: 0.4rem;
+      color: #eeeeee;
+      font-size: 1rem;
     }
 
     .total {
-      margin-top: 2.5rem;
       text-align: right;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: bold;
-      color: #ffeb3b;
+      color: var(--jaune);
+      margin-top: 2rem;
       padding-top: 1rem;
       border-top: 1px solid #333;
     }
@@ -114,13 +111,18 @@
       }
 
       .item img {
-        width: 60px;
-        height: 60px;
+        width: 100%;
+        height: auto;
       }
 
-      h1 {
-        font-size: 2.2rem;
+      .total {
+        text-align: center;
       }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -131,17 +133,25 @@
   <main>
     <div class="item-list">
       <div class="item">
-        <img src="https://images2.ray-ban.com//cdn-record-files-pi/433f3834-e98f-495c-b1b2-b1e0008558de/44f3e2a1-aeec-4cf1-9e0f-b1e800e8080e/0RW4006__601S1M__P21__shad__al31.png?impolicy=RB_Product_clone&width=720&bgc=%23f2f2f2" alt="Ray-Ban Smart Glasses">
+        <img src="https://images2.ray-ban.com//cdn-record-files-pi/433f3834-e98f-495c-b1b2-b1e0008558de/44f3e2a1-aeec-4cf1-9e0f-b1e800e8080e/0RW4006__601S1M__P21__shad__al31.png" alt="Ray-Ban Smart Glasses">
         <div class="item-details">
-          <div class="item-name"><a href="https://www.ray-ban.com/belgium/fr/electronics/RW4006ray-ban%20%7C%20meta%20wayfarer-noir/8056262326787" target="_blank">Ray-Ban Smart Glasses</a></div>
+          <div class="item-name">
+            <a href="https://www.ray-ban.com/belgium/fr/electronics/RW4006ray-ban%20%7C%20meta%20wayfarer-noir/8056262326787" target="_blank">
+              Ray-Ban Smart Glasses
+            </a>
+          </div>
           <div class="item-price">739 €</div>
         </div>
       </div>
 
       <div class="item">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Coolblue_Logo.svg/1200px-Coolblue_Logo.svg.png" alt="PC portable">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Coolblue_Logo.svg/1200px-Coolblue_Logo.svg.png" alt="PC Portable">
         <div class="item-details">
-          <div class="item-name"><a href="https://www.coolblue.be/fr/ordinateurs-portables/ordinateurs-portables-gaming/filter/gaming-videokaart:nvidia-geforce-rtx-4070/intern-werkgeheugen-ram:32000000000" target="_blank">PC Portable</a></div>
+          <div class="item-name">
+            <a href="https://www.coolblue.be/fr/ordinateurs-portables/ordinateurs-portables-gaming/filter/gaming-videokaart:nvidia-geforce-rtx-4070/intern-werkgeheugen-ram:32000000000" target="_blank">
+              PC Portable RTX 4070
+            </a>
+          </div>
           <div class="item-price">1800 €</div>
         </div>
       </div>
@@ -149,7 +159,11 @@
       <div class="item">
         <img src="https://tryhackme.com/static/media/certification-badge.85e8505ff659e41fda87.png" alt="SAL 1">
         <div class="item-details">
-          <div class="item-name"><a href="https://tryhackme.com/certification/security-analyst-level-1/details" target="_blank">SAL 1</a></div>
+          <div class="item-name">
+            <a href="https://tryhackme.com/certification/security-analyst-level-1/details" target="_blank">
+              TryHackMe SAL 1
+            </a>
+          </div>
           <div class="item-price">349 €</div>
         </div>
       </div>
@@ -157,7 +171,11 @@
       <div class="item">
         <img src="https://tryhackme.com/static/media/pt1-certification-badge.e46363ab64183b5e3426.png" alt="PT 1">
         <div class="item-details">
-          <div class="item-name"><a href="https://tryhackme.com/certification/junior-penetration-tester/details" target="_blank">PT 1</a></div>
+          <div class="item-name">
+            <a href="https://tryhackme.com/certification/junior-penetration-tester/details" target="_blank">
+              TryHackMe PT 1
+            </a>
+          </div>
           <div class="item-price">349 €</div>
         </div>
       </div>
@@ -176,6 +194,7 @@
       });
       document.getElementById('total').textContent = `Total : ${total.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}`;
     }
+
     calculateTotal();
   </script>
 </body>
