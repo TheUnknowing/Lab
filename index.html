@@ -8,43 +8,41 @@
   <style>
     body {
       font-family: 'Bebas Neue', sans-serif;
-      background-color: #121212;
-      color: #e0e0e0;
+      background-color: #000;
+      color: #f4f4f4;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
     }
 
-    /* Effet de fade-in pour le titre */
     h1 {
-      margin-bottom: 1.5rem;
       font-size: 3rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      opacity: 0;
+      letter-spacing: 2px;
+      margin: 0;
       animation: fadeIn 2s forwards;
+      color: #ffeb3b;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     header {
-      background-color: #1f1f1f;
-      color: #00bcd4;
-      padding: 1.5rem 2rem;
+      background-color: #111;
+      padding: 2rem;
       text-align: center;
+      box-shadow: 0 2px 10px rgba(255, 235, 59, 0.1);
       border-bottom: 1px solid #333;
-      box-shadow: 0 2px 10px rgba(0, 188, 212, 0.1);
     }
 
     main {
-      max-width: 800px;
+      max-width: 900px;
       margin: 2rem auto;
       padding: 0 1rem;
+      animation: fadeIn 1s ease-out 1s forwards;
       opacity: 0;
-      animation: fadeIn 1s forwards 2s; /* delay d'animation pour le contenu principal */
     }
 
     .item-list {
@@ -54,66 +52,62 @@
     }
 
     .item {
-      background-color: #1e1e1e;
-      padding: 1.2rem;
-      border-left: 4px solid #00bcd4;
-      border-radius: 10px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+      background-color: #1a1a1a;
+      border-left: 4px solid #ffeb3b;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
       display: flex;
-      align-items: center;
       gap: 1rem;
-      transition: transform 0.2s ease, background-color 0.3s, box-shadow 0.3s ease;
+      align-items: center;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
 
     .item:hover {
-      transform: scale(1.05);
-      background-color: #242424;
-      box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 18px rgba(255, 235, 59, 0.3);
     }
 
     .item img {
       width: 80px;
       height: 80px;
-      border-radius: 6px;
+      border-radius: 10px;
       object-fit: cover;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      box-shadow: 0 0 10px rgba(255, 235, 59, 0.2);
     }
 
     .item-details {
       flex-grow: 1;
     }
 
-    .item-name {
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 0.3rem;
+    .item-name a {
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: #ffeb3b;
+      transition: color 0.2s;
+    }
+
+    .item-name a:hover {
+      color: #fff176;
     }
 
     .item-price {
-      color: #00bcd4;
-      font-size: 1rem;
+      margin-top: 0.3rem;
+      font-size: 1.1rem;
+      color: #fdd835;
     }
 
     .total {
-      margin-top: 2rem;
+      margin-top: 2.5rem;
       text-align: right;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #76ff03;
-      border-top: 1px solid #333;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #ffeb3b;
       padding-top: 1rem;
+      border-top: 1px solid #333;
     }
 
-    /* Styles responsive pour mobile */
     @media (max-width: 768px) {
-      body {
-        font-size: 14px;
-      }
-
-      .item-list {
-        padding: 1rem;
-      }
-
       .item {
         flex-direction: column;
         align-items: flex-start;
@@ -123,19 +117,23 @@
         width: 60px;
         height: 60px;
       }
+
+      h1 {
+        font-size: 2.2rem;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Buy List</h1>
+    <h1>Liste d'Achats</h1>
   </header>
   <main>
     <div class="item-list">
       <div class="item">
         <img src="https://images2.ray-ban.com//cdn-record-files-pi/433f3834-e98f-495c-b1b2-b1e0008558de/44f3e2a1-aeec-4cf1-9e0f-b1e800e8080e/0RW4006__601S1M__P21__shad__al31.png?impolicy=RB_Product_clone&width=720&bgc=%23f2f2f2" alt="Ray-Ban Smart Glasses">
         <div class="item-details">
-          <div class="item-name"><a href="https://www.ray-ban.com/belgium/fr/electronics/RW4006ray-ban%20%7C%20meta%20wayfarer-noir/8056262326787" target="_blank" style="color: #00bcd4; text-decoration: none;">Ray-Ban Smart Glasses</a></div>
+          <div class="item-name"><a href="https://www.ray-ban.com/belgium/fr/electronics/RW4006ray-ban%20%7C%20meta%20wayfarer-noir/8056262326787" target="_blank">Ray-Ban Smart Glasses</a></div>
           <div class="item-price">739 €</div>
         </div>
       </div>
@@ -143,7 +141,7 @@
       <div class="item">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Coolblue_Logo.svg/1200px-Coolblue_Logo.svg.png" alt="PC portable">
         <div class="item-details">
-          <div class="item-name"><a href="https://www.coolblue.be/fr/ordinateurs-portables/ordinateurs-portables-gaming/filter/gaming-videokaart:nvidia-geforce-rtx-4070/intern-werkgeheugen-ram:32000000000" target="_blank" style="color: #00bcd4; text-decoration: none;">PC portable</a></div>
+          <div class="item-name"><a href="https://www.coolblue.be/fr/ordinateurs-portables/ordinateurs-portables-gaming/filter/gaming-videokaart:nvidia-geforce-rtx-4070/intern-werkgeheugen-ram:32000000000" target="_blank">PC Portable</a></div>
           <div class="item-price">1800 €</div>
         </div>
       </div>
@@ -151,7 +149,7 @@
       <div class="item">
         <img src="https://tryhackme.com/static/media/certification-badge.85e8505ff659e41fda87.png" alt="SAL 1">
         <div class="item-details">
-          <div class="item-name"><a href="https://tryhackme.com/certification/security-analyst-level-1/details" target="_blank" style="color: #00bcd4; text-decoration: none;">SAL 1</a></div>
+          <div class="item-name"><a href="https://tryhackme.com/certification/security-analyst-level-1/details" target="_blank">SAL 1</a></div>
           <div class="item-price">349 €</div>
         </div>
       </div>
@@ -159,12 +157,12 @@
       <div class="item">
         <img src="https://tryhackme.com/static/media/pt1-certification-badge.e46363ab64183b5e3426.png" alt="PT 1">
         <div class="item-details">
-          <div class="item-name"><a href="https://tryhackme.com/certification/junior-penetration-tester/details" target="_blank" style="color: #00bcd4; text-decoration: none;">PT 1</a></div>
+          <div class="item-name"><a href="https://tryhackme.com/certification/junior-penetration-tester/details" target="_blank">PT 1</a></div>
           <div class="item-price">349 €</div>
         </div>
       </div>
-
     </div>
+
     <div class="total" id="total">Total : 0 €</div>
   </main>
 
@@ -178,7 +176,6 @@
       });
       document.getElementById('total').textContent = `Total : ${total.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}`;
     }
-
     calculateTotal();
   </script>
 </body>
