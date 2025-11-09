@@ -1,275 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Chat binaire qui marche — Page GitHub</title>
-  <style>
-    :root{
-      --bg:#000;
-      --fg:#8cff6b; /* vert terminal */
-      --muted:#4b8f3a;
-    }
-    html,body{height:100%;}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--fg);
-      font-family: "Courier New", monospace;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      gap:1rem;
-      padding:2rem;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat binaire qui marche</title>
+<style>
+  body {
+    background-color: black;
+    color: #00ff66;
+    font-family: "Courier New", monospace;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
 
-    .stage{
-      width:min(900px,96vw);
-      height:260px;
-      overflow:hidden;
-      border:2px solid rgba(140,255,107,0.06);
-      box-shadow:0 8px 30px rgba(0,0,0,0.6) inset, 0 6px 30px rgba(0,0,0,0.6);
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent 30%);
-      position:relative;
-    }
-
-    /* wrapper that we translate to create walking across the stage */
-    .walker{
-      position:absolute;
-      left:-40%; /* start off-screen */
-      top:20px;
-      will-change:transform;
-      display:inline-block;
-      animation:walk-across var(--walk-duration,12s) linear infinite;
-    }
-
-    @keyframes walk-across{
-      from{transform:translateX(0)}
-      to{transform:translateX(140%)}
-    }
-
-    pre.cat {
-      margin:0;
-      padding:1rem 1.25rem;
-      font-size:14px;
-      line-height:0.9;
-      letter-spacing:2px;
-      white-space:pre;
-      user-select:none;
-      color:var(--fg);
-      text-shadow:0 0 6px rgba(140,255,107,0.12);
-      background:transparent;
-    }
-
-    .controls{
-      display:flex;
-      gap:0.75rem;
-      align-items:center;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    input[type=range]{
-      accent-color:var(--fg);
-    }
-
-    button{background:transparent;border:1px solid var(--muted);color:var(--fg);padding:6px 10px;border-radius:6px;cursor:pointer}
-    button:hover{border-color:var(--fg)}
-
-    .subtitle{color:var(--muted);font-size:13px}
-
-    footer{margin-top:8px;color:#2f6f24;font-size:12px}
-
-    @media (max-width:520px){
-      .stage{height:220px}
-      pre.cat{font-size:11px;letter-spacing:1px}
-    }
-  </style>
+  pre {
+    font-size: 10px;
+    line-height: 10px;
+    text-shadow: 0 0 8px #00ff66;
+    white-space: pre;
+    user-select: none;
+  }
+</style>
 </head>
 <body>
-  <h1 style="margin:0 0 .25rem 0; font-weight:600">Chat binaire qui marche</h1>
-  <div class="subtitle">Copie ce fichier comme <code>index.html</code> et publie sur GitHub Pages</div>
+<pre id="cat"></pre>
 
-  <div class="stage" aria-hidden="false">
-    <div class="walker" id="walker">
-      <pre class="cat" id="cat">01010101010101010101010101010101010101</pre>
-    </div>
-  </div>
+<script>
+const frames = [
+`000000000000000000000000000000
+000000000000000111100000000000
+000000000000111111110000000000
+000000000001111111111000000000
+000000000011100111001100000000
+000000000111000111000110000000
+000000001110001111100011000000
+000000011100111111110011100000
+000000111111111111111111110000
+000000111111111111111111110000
+000000111100111111110011110000
+000000011100011111000111000000
+000000001110001110001110000000
+000000000111000000011100000000
+000000000011100000111000000000
+000000000001111111110000000000
+000000000000011111000000000000
+000000000000000000000000000000`,
 
-  <div class="controls">
-    <label>Vitesse
-      <input id="speed" type="range" min="4" max="24" step="0.5" value="12">
-    </label>
-    <button id="pause">Pause</button>
-    <button id="reset">Réinitialiser position</button>
-    <div style="width:8px"></div>
-    <a href="#" id="download" style="color:var(--fg);text-decoration:underline">Télécharger HTML</a>
-  </div>
+`000000000000000000000000000000
+000000000000000111100000000000
+000000000000111111110000000000
+000000000001111111111000000000
+000000000011100111001100000000
+000000000111000111000110000000
+000000001110001111100011000000
+000000011100111111110011100000
+000000111111111111111111110000
+000000111111111111111111110000
+000000111100111111110011110000
+000000011100011111000111000000
+000000001110001110001110000000
+000000000111000000011100000000
+000000000011100000111000000000
+000000000001110000110000000000
+000000000000011111000000000000
+000000000000000000000000000000`,
 
-  <footer>Animation faite uniquement de 0 et 1 — style terminal</footer>
+`000000000000000000000000000000
+000000000000000111100000000000
+000000000000111111110000000000
+000000000001111111111000000000
+000000000011100111001100000000
+000000000111000111000110000000
+000000001110001111100011000000
+000000011100111111110011100000
+000000111111111111111111110000
+000000111111111111111111110000
+000000111100111111110011110000
+000000011100011111000111000000
+000000001110001110001110000000
+000000000111000000011100000000
+000000000011100001111000000000
+000000000001111111111000000000
+000000000000011111000000000000
+000000000000000000000000000000`,
 
-  <script>
-    // Deux frames ASCII du chat dessinées uniquement avec les caractères '0' et '1' (espaces inclus).
-    // Les frames sont alternées pour simuler la marche. On conserve uniquement 0/1 comme demandé.
+`000000000000000000000000000000
+000000000000000111100000000000
+000000000000111111110000000000
+000000000001111111111000000000
+000000000011100111001100000000
+000000000111000111000110000000
+000000001110001111100011000000
+000000011100111111110011100000
+000000111111111111111111110000
+000000111111111111111111110000
+000000111100111111110011110000
+000000011100011111000111000000
+000000001110001110001110000000
+000000000111000011100000000000
+000000000011100111000000000000
+000000000001111110000000000000
+000000000000011100000000000000
+000000000000000000000000000000`
+];
 
-    const frames = [
-`000000000000000000000000000000000000000000000
-000000000000000011110000000000000000000000000
-000000000000001100001100000000000000000000000
-000000000000011000000011000000000000000000000
-000000000000110000000000110000000000000000000
-000000000011000000000000001100000000000000000
-000000001100000001100000000011000000000000000
-000000011000000111110000000001100000000000000
-000000110000001100011000000000110000000000000
-000001100000011000001100000000011000000000000
-000001100000110000000110000000001100000000000
-000011000001100000000011000000000110000000000
-000110000011000000000001100000000001100000000
-001100000110000000000000110000000000110000000
-011000001100000000000000011000000000011000000
-110000011000000000000000001100000000001100000
-000000000000000000000000000000000000000000000`,
-`000000000000000000000000000000000000000000000
-000000000000000011110000000000000000000000000
-000000000000001100001100000000000000000000000
-000000000000011000000011000000000000000000000
-000000000000110000000000110000000000000000000
-000000000011000000000000001100000000000000000
-000000001100000001100000000011000000000000000
-000000011000000111110000000001100000000000000
-000000110000001100011000000000110000000000000
-000001100000011000001100000000011000000000000
-000001100000110000000110000000001100000000000
-000011000001100000000011000000000110000000000
-000110000011000000000001100000000001100000000
-001100000110000000000000110000000000110000000
-011000001100000000000000011000000000011000000
-110000011000000000000000001100000000001100000
-000000000000000000000000000000000000000000000`];
+let i = 0;
+const cat = document.getElementById("cat");
 
-    // The frames above currently are the same shape. We'll programmatically toggle some bits
-    // for the 'legs' to create two distinct walking frames so the cat appears to move.
+function animate() {
+  cat.textContent = frames[i];
+  i = (i + 1) % frames.length;
+}
 
-    function makeWalkingFrames(base1){
-      const a = base1.split('\n');
-      // clone a for second frame
-      const b = a.map(s=>s.split(''));
-      // Toggle some positions to simulate leg motion. We will flip some 0/1 in lower rows.
-      const rows = a.length;
-      const cols = a[0].length;
-
-      // copy into arrays of chars
-      const A = a.map(s=>s.split(''));
-      const B = a.map(s=>s.split(''));
-
-      // choose some coords for paw animation (relative columns)
-      const pawCoords = [
-        {r:rows-6, c:6}, {r:rows-5, c:8}, {r:rows-4, c:10},
-        {r:rows-6, c:30}, {r:rows-5, c:32}, {r:rows-4, c:34}
-      ];
-      pawCoords.forEach((p,i)=>{
-        // flip between 0 and 1 for frame B to create motion
-        const r = p.r; const c = p.c;
-        if (B[r] && B[r][c]){
-          B[r][c] = B[r][c] === '0' ? '1' : '0';
-          // also toggle surrounding to make a small paw shape
-          if (B[r][c+1]) B[r][c+1] = B[r][c+1] === '0' ? '1' : '0';
-          if (B[r+1] && B[r+1][c]) B[r+1][c] = B[r+1][c] === '0' ? '1' : '0';
-        }
-      });
-
-      return [A.map(r=>r.join('')).join('\n'), B.map(r=>r.join('')).join('\n')];
-    }
-
-    const built = makeWalkingFrames(frames[0]);
-    const F0 = built[0];
-    const F1 = built[1];
-
-    const catEl = document.getElementById('cat');
-    let idx = 0;
-    let interval = null;
-    let playing = true;
-
-    function renderFrame(){
-      catEl.textContent = (idx % 2 === 0) ? F0 : F1;
-      idx++;
-    }
-
-    // default frame interval (controls "step" speed of legs). We'll keep it independent
-    // from the walk-across duration so legs step multiple times while moving.
-    let stepMs = 220; // will be updated from speed control
-
-    function startStepping(){
-      if (interval) clearInterval(interval);
-      interval = setInterval(renderFrame, stepMs);
-    }
-
-    startStepping();
-
-    // Speed slider controls the duration of the walk-across animation.
-    const speed = document.getElementById('speed');
-    const walker = document.getElementById('walker');
-    function updateSpeed(){
-      const val = Number(speed.value);
-      // map slider to CSS animation duration (bigger value -> slower walk)
-      const duration = val + 's';
-      walker.style.setProperty('--walk-duration', duration);
-
-      // also adjust stepping speed (faster walk -> faster steps)
-      stepMs = Math.max(80, 700 - (val*25));
-      startStepping();
-    }
-    speed.addEventListener('input', updateSpeed);
-    updateSpeed();
-
-    // Pause / resume button pauses both the walking translation and the stepping.
-    const pauseBtn = document.getElementById('pause');
-    pauseBtn.addEventListener('click', ()=>{
-      if (playing){
-        walker.style.animationPlayState = 'paused';
-        clearInterval(interval);
-        pauseBtn.textContent = 'Reprendre';
-      } else {
-        walker.style.animationPlayState = 'running';
-        startStepping();
-        pauseBtn.textContent = 'Pause';
-      }
-      playing = !playing;
-    });
-
-    // reset position: restart animation by forcing a reflow trick
-    document.getElementById('reset').addEventListener('click', ()=>{
-      walker.style.animation = 'none';
-      // force reflow
-      void walker.offsetWidth;
-      walker.style.animation = null; // will pick up CSS again
-    });
-
-    // provide a download link for the HTML source (self-contained)
-    const download = document.getElementById('download');
-    download.addEventListener('click', (e)=>{
-      e.preventDefault();
-      const html = '<!doctype html>\n' + document.documentElement.outerHTML;
-      const blob = new Blob([html], {type:'text/html'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'index.html';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    });
-
-    // accessibility: allow space to pause/play
-    window.addEventListener('keydown', (e)=>{
-      if (e.code === 'Space'){
-        e.preventDefault();
-        pauseBtn.click();
-      }
-    });
-
-  </script>
+setInterval(animate, 200);
+</script>
 </body>
 </html>
