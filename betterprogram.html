@@ -90,46 +90,48 @@
       <div class="input-group">
         <label>SEMAINE</label>
         <select id="weekSelect" onchange="updateWeights()">
-          <option value="1">S1 - START</option>
-          <option value="2">S2 - CHARGE</option>
-          <option value="3">S3 - PEAK</option>
+          <option value="1">S1 - Start</option>
+          <option value="2">S2 - Charge</option>
+          <option value="3">S3 - Peak</option>
           <option value="4">S4 - Deload</option>
         </select>
       </div>
     </div>
 
     <div class="day open">
-      <h2>Jour 1 — Squat Focus <span>−</span></h2>
+      <h2>Jour 1 — Squat Focus + Bench Acc <span>−</span></h2>
       <div class="exercises">
         <ul>
           <li><span>Squat (Compétition) — 3×5</span> <span class="weight-display" id="val-s1"></span></li>
-          <li><span>Close Grip Bench — 3×8</span> <span class="weight-display" id="val-s2"></span></li>
-          <li><span>Fentes Bulgares — 3×10</span> <span class="weight-display">RPE 7</span></li>
-          <li><span>Extensions Triceps — 3×12</span> <span class="weight-display">RPE 8</span></li>
+          <li><span>Incline Bench — 2×6-8</span> <span class="weight-display">RPE 8</span></li>
+          <li><span>Leg Press — 3×6-10</span> <span class="weight-display">RPE 7</span></li>
+          <li><span>2 Triceps — 2×8-10</span> <span class="weight-display">RPE 7</span></li>
+          <li><span>Chest Fly — 2×6-10</span> <span class="weight-display">RPE 7</span></li>
         </ul>
       </div>
     </div>
 
     <div class="day">
-      <h2>Jour 2 — Deadlift Focus <span>+</span></h2>
+      <h2>Jour 2 — Deadlift Focus + Squat Acc <span>+</span></h2>
       <div class="exercises">
         <ul>
           <li><span>Deadlift (Compétition) — 3×3</span> <span class="weight-display" id="val-d1"></span></li>
           <li><span>Pause Squat (2s) — 3×4</span> <span class="weight-display" id="val-d2"></span></li>
-          <li><span>Rowing Barre Strict — 4×8</span> <span class="weight-display">RPE 8</span></li>
-          <li><span>Planche lestée — 3x45s</span> <span class="weight-display">CORE</span></li>
+          <li><span>2 Rowing — 3×6-8</span> <span class="weight-display">RPE 8</span></li>
+          <li><span>2 Biceps Curls — 2x6-10</span> <span class="weight-display">RPE 7</span></li>
         </ul>
       </div>
     </div>
 
     <div class="day">
-      <h2>Jour 3 — Bench Focus <span>+</span></h2>
+      <h2>Jour 3 — Bench Focus & Shoulders Acc<span>+</span></h2>
       <div class="exercises">
         <ul>
           <li><span>Bench Press (Pause) — 3×4</span> <span class="weight-display" id="val-b1"></span></li>
-          <li><span>Larsen Press — 3×8</span> <span class="weight-display" id="val-b2"></span></li>
-          <li><span>OHP (Overhead Press) — 3×8</span> <span class="weight-display">RPE 8</span></li>
-          <li><span>Élévations Latérales — 4×15</span> <span class="weight-display">RPE 9</span></li>
+          <li><span>Larsen Press Machine — 2×6-8</span> <span class="weight-display" id="val-b2"></span></li>
+          <li><span>OHP (Overhead Press) — 3×6-8</span> <span class="weight-display">RPE 8</span></li>
+          <li><span>Élévations Latérales — 3×8-10</span> <span class="weight-display">RPE 9</span></li>
+          <li><span>2 Triceps — 2×6-10</span> <span class="weight-display">RPE 7</span></li>
         </ul>
       </div>
     </div>
@@ -138,19 +140,21 @@
       <h2>Jour 4 — DL Acc. & Hypertrophie <span>+</span></h2>
       <div class="exercises">
         <ul>
-          <li><span>Deadlift Jambes Tendues — 3×8</span> <span class="weight-display" id="val-da1"></span></li>
-          <li><span>Dips lestés — 3×10</span> <span class="weight-display">RPE 8</span></li>
-          <li><span>Pull-ups (Tractions) — 3×MAX</span> <span class="weight-display">BODY</span></li>
-          <li><span>Curls & Facepulls — 3×15</span> <span class="weight-display">REHAB</span></li>
+          <li><span>Deadlift Variante — 3×8</span> <span class="weight-display" id="val-da1"></span></li>
+          <li><span>Leg Extension — 2×8-10</span> <span class="weight-display">RPE 8</span></li>
+          <li><span>Lat Pull-Down — 3×6-8</span> <span class="weight-display">RPE 8</span></li>
+          <li><span>Curls — 3×8-10</span> <span class="weight-display">RPE 7</span></li>
+          <li><span>Facepulls/Rear delt — 2×8-12</span> <span class="weight-display">RPE 7</span></li>
+          <li><span>Leg Curls — 2×8-10</span> <span class="weight-display">RPE 8</span></li>
         </ul>
       </div>
     </div>
 
     <div class="note">
-      <strong>Logique de progression :</strong><br>
-      - Squat / Bench : 75% ➔ 80% ➔ 85% ➔ 60%<br>
-      - Deadlift : 75% ➔ 85% ➔ 90% ➔ 60%<br>
-      - Arrondi automatique aux 2.5kg les plus proches.
+      <strong>Notes de programmation :</strong><br>
+      - Repos : 3 à 5 min sur les lifts principaux (SBD).<br>
+      - S1 à S3 : Augmentation du poids. S4 : Récupération active.<br>
+      - Si le RPE en S3 est < 8, augmente tes maxs de 2.5kg au cycle suivant.
     </div>
 
     <footer>
