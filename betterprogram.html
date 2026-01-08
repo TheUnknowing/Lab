@@ -181,10 +181,12 @@
 
       let pS, pB, pD;
 
-      if (week === "1") { pS = 0.75; pB = 0.75; pD = 0.75; }
-      else if (week === "2") { pS = 0.80; pB = 0.80; pD = 0.85; }
-      else if (week === "3") { pS = 0.85; pB = 0.85; pD = 0.90; }
-      else { pS = 0.60; pB = 0.60; pD = 0.60; }
+      switch(week) {
+        case "1": pS = 0.75; pB = 0.75; pD = 0.75; break;
+        case "2": pS = 0.80; pB = 0.80; pD = 0.85; break;
+        case "3": pS = 0.85; pB = 0.85; pD = 0.90; break;
+        case "4": pS = 0.60; pB = 0.60; pD = 0.60; break;
+      }
 
       // Application des calculs
       document.getElementById('val-s1').innerText = round25(sMax * pS) + " kg";
