@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gym</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: black;
+      color: #00ff00;
+      font-family: 'Orbitron', monospace;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    canvas.matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    h1, h2, h3 {
+      color: #00ff00;
+      z-index: 1;
+      position: relative;
+    }
+
+    .section {
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid #00ff00;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 40px;
+      box-shadow: 0 0 15px #00ff00;
+    }
+
+    .lift-title {
+      display: flex;
+      align-items: center;
+      color: #00ff00;
+    }
+
+    canvas:not(.matrix) {
+      background-color: #000;
+      border: 1px solid #00ff00;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    a {
+      color: #00ffff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li::before {
+      content: "$ ";
+      color: #00ff00;
+    }
+
+    .video-list li::before {
+      content: "";
+    }
+
+    footer {
+      border-top: 1px solid #00ff00;
+      padding-top: 10px;
+      font-size: 0.9em;
+      color: #00ff00;
+      position: relative;
+      z-index: 3;
+    }
+
+    #daysCount {
+      font-size: 1.3em;
+      white-space: pre;
+      background-color: black;
+      padding: 10px;
+      border-left: 4px solid #00ff00;
+      font-family: monospace;
+    }
+
+    .glitch-text {
+      display: inline-block;
+      white-space: pre;
+      font-family: 'Orbitron', monospace;
+      color: #00ff00;
+      animation: none;
+    }
+
+    #prSection h2 {
+      margin-bottom: 25px;
+      font-family: 'Orbitron', monospace;
+      color: #00ff00;
+      text-shadow: 0 0 8px #00ff00;
+    }
+    .pr-lift {
+      font-family: 'Orbitron', monospace;
+      background: rgba(0, 255, 0, 0.1);
+      border: 1px solid #00ff00;
+      border-radius: 10px;
+      padding: 12px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px #00ff00;
+      color: #aaffaa;
+    }
+    .pr-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+      color: #aaffaa;
+    }
+    .pr-header .title {
+      flex-basis: 35%;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: #00ff00;
+    }
+    .pr-header .pr-value {
+      flex-basis: 30%;
+      font-weight: 900;
+      font-size: 2.1rem;
+      text-align: center;
+      color: #00ff00;
+      text-shadow: 0 0 10px #00ff00;
+    }
+    .pr-header .progress {
+      flex-basis: 25%;
+      font-weight: 600;
+      font-size: 1.2rem;
+      text-align: right;
+      color: #55ff55;
+    }
+    .progress-bar-container {
+      background: rgba(0, 255, 0, 0.15);
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: inset 0 0 6px #00ff00;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00ff00 0%, #55ff55 100%);
+      border-radius: 6px;
+      box-shadow: 0 0 8px #00ff00;
+      transition: width 1.2s ease-out;
+    }
+    #prTotal {
+      box-shadow: 0 0 18px #00ff00;
+      background: rgba(0, 255, 0, 0.15);
+    }
+    
+  </style>
+</head>
+<body>
+
+  <canvas class="matrix"></canvas>
+
+  <h1 class="glitch-text" data-text="Powerlifting">Powerlifting</h1>
+    
+  <div class="section" id="timeInGym">
+    <h2>Time since the first day at gym :</h2>
+    <pre id="daysCount">Loading...</pre>
+  </div>
+
+  <div class="section" id="prSection">
+    <h2>SBD</h2>
+  
+    <div class="pr-lift" id="prSquat">
+      <div class="pr-header">
+        <span class="title">🦵 Squat PR</span>
+        <span class="pr-value">-- kg</span>
+        <span class="progress">--%</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+  
+    <div class="pr-lift" id="prBench">
+      <div class="pr-header">
+        <span class="title">🏅 Bench PR</span>
+        <span class="pr-value">-- kg</span>
+        <span class="progress">--%</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+  
+    <div class="pr-lift" id="prDeadlift">
+      <div class="pr-header">
+        <span class="title">💀 Deadlift PR</span>
+        <span class="pr-value">-- kg</span>
+        <span class="progress">--%</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+
+    <div class="pr-lift" id="prTotal">
+      <div class="pr-header">
+        <span class="title">🔥 Total SBD</span>
+        <span class="pr-value">-- kg</span>
+        <span class="progress">--%</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="section">
+    <h2>Progression</h2>
+    <div class="lift-title"><span class="icon">🦵</span><h3>Squat</h3></div>
+    <canvas id="squatChart" width="400" height="200"></canvas>
+
+    <div class="lift-title"><span class="icon">🏅</span><h3>Bench Press</h3></div>
+    <canvas id="benchChart" width="400" height="200"></canvas>
+
+    <div class="lift-title"><span class="icon">💀</span><h3>Deadlift</h3></div>
+    <canvas id="deadliftChart" width="400" height="200"></canvas>
+  </div>
+
+  <div class="section">
+    <h2>DOTs Score</h2>
+    <p id="dotsScore"></p>
+  </div>
+
+  <div class="section">
+    <h2>Goals</h2>
+    <ul>
+      <li>Squat : 220 kg</li>
+      <li>Bench : 160 kg</li>
+      <li>Deadlift : 260 kg</li>
+      <li>Overhead Press : 100 kg</li>
+      <li>Strict Curl : 60 kg</li>
+      <li>Weight : 93 kg</li>
+      <li>Bodyfat : 10-12%</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Youtube</h2>
+    <ul class="video-list">
+      <li><a href="https://youtu.be/dmejud81-t0" target="_blank">When cat</a></li>
+      <li><a href="https://youtu.be/r4ye2n0Jt68" target="_blank">SBD 2025</a></li>
+    </ul>
+  </div>
+
+  <div class="section" id="programSection">
+    <h2>Program</h2>
+    <p>Check out my powerlifting program (showing only the progression for the main compound lifts, not the accessory exercises)</p>
+    <a href="program.html">
+      <button style="
+        background-color: #00ff00;
+        color: black;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-family: 'Orbitron', monospace;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 0 10px #00ff00;
+        transition: all 0.3s ease;
+      " onmouseover="this.style.backgroundColor='#55ff55'" onmouseout="this.style.backgroundColor='#00ff00'">
+        Here
+      </button>
+    </a>
+  </div>
+
+  <footer>
+    <p>© 2025 - Personal page of Mahi Chahid</p>
+  </footer>
+
+  <script>
+    // Matrix Rain Background
+    const canvas = document.querySelector("canvas.matrix");
+    const ctx = canvas.getContext("2d");
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    const matrix = "アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({ length: columns }, () => 1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrix[Math.floor(Math.random() * matrix.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 33);
+
+    // Time Since First Day
+    const startDate = new Date(2021, 9, 20); // octobre = 9 car mois commence à 0 en JS
+    const today = new Date();
+    
+    let years = today.getFullYear() - startDate.getFullYear();
+    let months = today.getMonth() - startDate.getMonth();
+    let days = today.getDate() - startDate.getDate();
+    
+    if (days < 0) {
+        months--;
+        days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+    }
+    
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+    
+    // Animation compteur
+    const targetDays = days;
+    const targetMonths = months;
+    const targetYears = years;
+    
+    let currentDays = 0;
+    let currentMonths = 0;
+    let currentYears = 0;
+    
+    function animateCounter() {
+        const daysElement = document.getElementById('daysCount');
+    
+        const interval = setInterval(() => {
+            if (currentYears < targetYears) {
+                currentYears++;
+            } else if (currentMonths < targetMonths) {
+                currentMonths++;
+            } else if (currentDays < targetDays) {
+                currentDays++;
+            } else {
+                clearInterval(interval);
+            }
+            daysElement.textContent = `${currentYears} years - ${currentMonths} months - ${currentDays} days.`;
+        }, 50); // vitesse de l'animation (plus bas = plus rapide)
+    }
+    
+    animateCounter();
+
+    // Chart data
+    const squatData = [75, 100, 115, 170];
+    const benchData = [60, 85, 110, 140];
+    const deadliftData = [90, 130, 160, 210];
+    const labels = ['2022', '2023', '2024', '2025'];
+
+    function createChart(canvasId, data, label, color) {
+      new Chart(document.getElementById(canvasId), {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: label,
+            data: data,
+            fill: true,
+            backgroundColor: color + '33',
+            borderColor: color,
+            tension: 0.3
+          }]
+        },
+        options: {
+          animation: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { color: "#0f0" },
+              grid: { color: "#003300" }
+            },
+            x: {
+              ticks: { color: "#0f0" },
+              grid: { color: "#003300" }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: { color: '#0f0' }
+            }
+          }
+        }
+      });
+    }
+
+    createChart('squatChart', squatData, 'Squat PR (kg)', '#ff6384');
+    createChart('benchChart', benchData, 'Bench PR (kg)', '#36a2eb');
+    createChart('deadliftChart', deadliftData, 'Deadlift PR (kg)', '#cc65fe');
+
+    // DOTS
+    const bodyWeight = 90;
+    const totalLift = squatData.at(-1) + benchData.at(-1) + deadliftData.at(-1);
+
+    function calculateDOTS(bodyweight, total) {
+      const a = -0.000001093;
+      const b = 0.0007391293;
+      const c = -0.1918759221;
+      const d = 24.0900756;
+      const e = -307.75076;
+      const coeff = a * bodyweight ** 4 + b * bodyweight ** 3 + c * bodyweight ** 2 + d * bodyweight + e;
+      return (total * 500) / coeff;
+    }
+
+    document.getElementById('dotsScore').textContent = `${calculateDOTS(bodyWeight, totalLift).toFixed(2)}`;
+
+    function glitchText(element, finalText, delay = 30) {
+      const chars = 'アァイィウヴエカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;';
+      let iterations = 0;
+    
+      const scramble = setInterval(() => {
+        let display = '';
+        for (let i = 0; i < finalText.length; i++) {
+          if (i < iterations) {
+            display += finalText[i];
+          } else {
+            display += chars[Math.floor(Math.random() * chars.length)];
+          }
+        }
+        element.textContent = display;
+    
+        if (iterations >= finalText.length) {
+          clearInterval(scramble);
+        }
+        iterations++;
+      }, delay);
+    }
+    
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".glitch-text").forEach(el => {
+        const text = el.getAttribute("data-text");
+        el.textContent = '';
+        setTimeout(() => glitchText(el, text), 300 + Math.random() * 500);
+      });
+    });
+    function setPRProgress(elementId, pr, goal) {
+      const container = document.getElementById(elementId);
+      const progressPercent = Math.min(((pr / goal) * 100), 100).toFixed(1);
+      const prValueElem = container.querySelector(".pr-value");
+      const progressElem = container.querySelector(".progress");
+      const progressBar = container.querySelector(".progress-bar");
+  
+      prValueElem.textContent = pr + " kg";
+      progressElem.textContent = progressPercent + "%";
+      // Animation with setTimeout to allow CSS transition
+      setTimeout(() => {
+        progressBar.style.width = progressPercent + "%";
+      }, 50);
+    }
+  
+    // Exemple de valeurs (à remplacer par tes variables)
+    const squatPR = 170;
+    const squatGoal = 220;
+    const benchPR = 140;
+    const benchGoal = 160;
+    const deadliftPR = 210;
+    const deadliftGoal = 260;
+    const totalPR = squatPR + benchPR + deadliftPR;
+    const totalGoal = squatGoal + benchGoal + deadliftGoal;
+    
+    setPRProgress("prTotal", totalPR, totalGoal);
+    setPRProgress("prSquat", squatPR, squatGoal);
+    setPRProgress("prBench", benchPR, benchGoal);
+    setPRProgress("prDeadlift", deadliftPR, deadliftGoal);
+  </script>
+</body>
+</html>
