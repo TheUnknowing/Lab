@@ -244,6 +244,12 @@
 
     <div class="lift-title"><span class="icon">💀</span><h3>Deadlift</h3></div>
     <canvas id="deadliftChart" width="400" height="200"></canvas>
+
+    <div class="lift-title">
+      <span class="icon">🔥</span><h3>Total SBD</h3>
+    </div>
+    <canvas id="totalChart" width="400" height="200"></canvas>
+
   </div>
 
   <div class="section">
@@ -375,6 +381,10 @@
     const benchData = [60, 85, 110, 140];
     const deadliftData = [90, 130, 160, 210];
     const labels = ['2022', '2023', '2024', '2025'];
+    const totalData = squatData.map((_, i) =>
+      squatData[i] + benchData[i] + deadliftData[i]
+    );
+
 
     function createChart(canvasId, data, label, color) {
       new Chart(document.getElementById(canvasId), {
@@ -415,6 +425,8 @@
     createChart('squatChart', squatData, 'Squat PR (kg)', '#ff6384');
     createChart('benchChart', benchData, 'Bench PR (kg)', '#36a2eb');
     createChart('deadliftChart', deadliftData, 'Deadlift PR (kg)', '#cc65fe');
+    createChart('totalChart',totalData,'Total SBD (kg)','#00ff00');
+
 
     // DOTS
     const bodyWeight = 90;
