@@ -236,20 +236,10 @@
   
   <div class="section">
     <h2>Progression</h2>
-    <div class="lift-title"><span class="icon">🦵</span><h3>Squat</h3></div>
-    <canvas id="squatChart" width="400" height="200"></canvas>
-
-    <div class="lift-title"><span class="icon">🏅</span><h3>Bench Press</h3></div>
-    <canvas id="benchChart" width="400" height="200"></canvas>
-
-    <div class="lift-title"><span class="icon">💀</span><h3>Deadlift</h3></div>
-    <canvas id="deadliftChart" width="400" height="200"></canvas>
-
     <div class="lift-title">
-      <span class="icon">🔥</span><h3>Total SBD</h3>
+      <span class="icon">📈</span><h3>SBD & Total Progression</h3>
     </div>
-    <canvas id="totalChart" width="400" height="200"></canvas>
-
+    <canvas id="sbdChart" width="400" height="200"></canvas>
   </div>
 
   <div class="section">
@@ -386,41 +376,66 @@
     );
 
 
-    function createChart(canvasId, data, label, color) {
-      new Chart(document.getElementById(canvasId), {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: label,
-            data: data,
-            fill: true,
-            backgroundColor: color + '33',
-            borderColor: color,
+    new Chart(document.getElementById('sbdChart'), {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Squat (kg)',
+            data: squatData,
+            borderColor: '#ff6384',
+            backgroundColor: '#ff638433',
             tension: 0.3
-          }]
-        },
-        options: {
-          animation: false,
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: { color: "#0f0" },
-              grid: { color: "#003300" }
-            },
-            x: {
-              ticks: { color: "#0f0" },
-              grid: { color: "#003300" }
-            }
           },
-          plugins: {
-            legend: {
-              labels: { color: '#0f0' }
+          {
+            label: 'Bench Press (kg)',
+            data: benchData,
+            borderColor: '#36a2eb',
+            backgroundColor: '#36a2eb33',
+            tension: 0.3
+          },
+          {
+            label: 'Deadlift (kg)',
+            data: deadliftData,
+            borderColor: '#cc65fe',
+            backgroundColor: '#cc65fe33',
+            tension: 0.3
+          },
+          {
+            label: '🔥 Total SBD (kg)',
+            data: totalData,
+            borderColor: '#00ff00',
+            backgroundColor: '#00ff0033',
+            borderWidth: 3,
+            tension: 0.25
+          }
+        ]
+      },
+      options: {
+        animation: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: "#0f0" },
+            grid: { color: "#003300" }
+          },
+          x: {
+            ticks: { color: "#0f0" },
+            grid: { color: "#003300" }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#0f0',
+              font: { weight: 'bold' }
             }
           }
         }
-      });
-    }
+      }
+    });
+
 
     createChart('squatChart', squatData, 'Squat PR (kg)', '#ff6384');
     createChart('benchChart', benchData, 'Bench PR (kg)', '#36a2eb');
