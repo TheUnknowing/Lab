@@ -171,6 +171,33 @@
       box-shadow: 0 0 18px #00ff00;
       background: rgba(0, 255, 0, 0.15);
     }
+    #chartToggles {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    #chartToggles button {
+      background: black;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-family: 'Orbitron', monospace;
+      cursor: pointer;
+      box-shadow: 0 0 8px #00ff00;
+      transition: all 0.2s ease;
+    }
+    
+    #chartToggles button:hover {
+      background: #00ff00;
+      color: black;
+    }
+    
+    #chartToggles button.inactive {
+      opacity: 0.35;
+      box-shadow: none;
+    }
     
   </style>
 </head>
@@ -239,6 +266,14 @@
     <div class="lift-title">
       <span class="icon">📈</span><h3>SBD & Total Progression</h3>
     </div>
+    
+    <div id="chartToggles" style="margin-bottom: 15px;">
+      <button data-dataset="0">Squat</button>
+      <button data-dataset="1">Bench</button>
+      <button data-dataset="2">Deadlift</button>
+      <button data-dataset="3" class="active">Total</button>
+    </div>
+
     <canvas id="sbdChart" width="400" height="200"></canvas>
   </div>
 
@@ -376,7 +411,7 @@
     );
 
 
-    new Chart(document.getElementById('sbdChart'), {
+    const sbdChart = new Chart(document.getElementById('sbdChart'), {
       type: 'line',
       data: {
         labels: labels,
@@ -414,6 +449,9 @@
       },
       options: {
         animation: false,
+        plugins: {
+          legend: { display: false } // 👈 on cache la légende native
+        },
         scales: {
           y: {
             beginAtZero: true,
@@ -424,19 +462,22 @@
             ticks: { color: "#0f0" },
             grid: { color: "#003300" }
           }
-        },
-        plugins: {
-          legend: {
-            labels: {
-              color: '#0f0',
-              font: { weight: 'bold' }
-            }
-          }
         }
       }
     });
 
-
+    document.querySelectorAll('#chartToggles button').forEach(button => {
+      button.addEventListener('click', () => {
+        const index = button.dataset.dataset;
+        const dataset = sbdChart.data.datasets[index];
+    
+        dataset.hidden = !dataset.hidden;
+        button.classList.toggle('inactive');
+    
+        sbdChart.update();
+      });
+    });
+    
     // DOTS
     const bodyWeight = 90;
     const totalLift = squatData.at(-1) + benchData.at(-1) + deadliftData.at(-1);
