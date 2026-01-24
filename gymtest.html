@@ -283,7 +283,7 @@
   </div>
 
   <div class="section">
-    <h2>Goals</h2>
+    <h2 id="goalsTitle"></h2>
     <ul>
       <li>Squat : 220 kg</li>
       <li>Bench : 160 kg</li>
@@ -299,7 +299,7 @@
     <h2>Youtube</h2>
     <ul class="video-list">
       <li><a href="https://youtu.be/dmejud81-t0" target="_blank">When cat</a></li>
-      <li><a href="https://youtu.be/r4ye2n0Jt68" target="_blank">SBD 2025</a></li>
+      <li><a href="https://youtu.be/r4ye2n0Jt68" target="_blank">SBD June 2025</a></li>
     </ul>
   </div>
 
@@ -325,7 +325,7 @@
   </div>
 
   <footer>
-    <p>© 2025 - Personal page of Mahi Chahid</p>
+    <p id="footerYear"></p>
   </footer>
 
   <script>
@@ -537,7 +537,18 @@
         progressBar.style.width = progressPercent + "%";
       }, 50);
     }
-  
+
+    // Dynamic current year
+    const currentYear = new Date().getFullYear();
+    
+    // Goals title
+    document.getElementById('goalsTitle').textContent =
+      `${currentYear} Goals`;
+    
+    // Footer
+    document.getElementById('footerYear').textContent =
+      `© ${currentYear} - Personal page of Mahi Chahid`;
+
     // Exemple de valeurs (à remplacer par tes variables)
     const squatPR = 170;
     const squatGoal = 220;
